@@ -14,6 +14,7 @@ namespace CSharpSeleniumFramework.Pages
 
         // Selectors
         private By _homePageNavBar = By.ClassName("navbar-inner");
+        private By _signInButton = By.Id("signin_button");
 
         // Constructor
         public HomePage(IWebDriver driver)
@@ -31,6 +32,10 @@ namespace CSharpSeleniumFramework.Pages
         public bool IsHomePageDisplayed()
         {
             return _driver.FindElement(_homePageNavBar).Displayed;
+        }
+
+        public void NavigateToLoginPage(){
+            _driver.FindElement(_signInButton).Click();
         }
     }
 }

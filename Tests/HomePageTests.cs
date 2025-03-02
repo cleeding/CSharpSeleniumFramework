@@ -30,10 +30,10 @@ namespace CSharpSeleniumFramework.Tests
         {
             _homePage.Visit();
             bool isHomePageDisplayed = _homePage.IsHomePageDisplayed();
-            Assert.That(!isHomePageDisplayed, "test");
+            Assert.That(isHomePageDisplayed, "HomePage should be displayed, but it was not.");
         }
 
-[TearDown]
+        [TearDown]
         public void Teardown()
         {
             if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed)
