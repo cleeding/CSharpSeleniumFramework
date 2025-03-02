@@ -3,22 +3,21 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Allure.NUnit.Attributes;
 using Allure.NUnit;
-using System;
-using System.IO;
+using CSharpSeleniumFramework.Utils;
 
-namespace PracticeTests
+namespace CSharpSeleniumFramework
 {
     [TestFixture]
-    [AllureNUnit] // 🔥 Required for Allure reporting
+    [AllureNUnit] // Required for Allure reporting
     public class DuckDuckGoTests
     {
-        private IWebDriver driver;
+        private IWebDriver _driver;
 
         [SetUp]
         public void Setup()
         {
-            driver = new ChromeDriver();
-            driver.Manage().Window.Maximize();
+            _driver = new ChromeDriver();
+            _driver.Manage().Window.Maximize();
         }
 
         [Test]
@@ -28,11 +27,11 @@ namespace PracticeTests
         {
             OpenDuckDuckGo();
 
-            var searchBox = driver.FindElement(By.Name("q"));
+            var searchBox = _driver.FindElement(By.Name("q"));
             searchBox.SendKeys("Selenium C# with Allure");
             searchBox.SendKeys(Keys.Enter);
 
-            Assert.That(driver.Title, Does.Contain("Selenium C#"));
+            Assert.That(_driver.Title, Does.Contain("Selenium C#"));
         }
 
         [Test]
@@ -42,7 +41,7 @@ namespace PracticeTests
         {
             OpenDuckDuckGo();
 
-            var searchButton = driver.FindElement(By.Id("search_button_homepage"));
+            var searchButton = _driver.FindElement(By.Id("search_button_homepage"));
             Assert.Equals(searchButton.Displayed, "Search button is not displayed.");
         }
 
@@ -53,7 +52,7 @@ namespace PracticeTests
         {
             OpenDuckDuckGo();
 
-            Assert.That(driver.Title, Is.EqualTo("DuckDuckGo — Privacy, simplified."));
+            Assert.That(_driver.Title, Is.EqualTo("DuckDuckGo — Privacy, simplified."));
         }
 
         [Test]
@@ -63,10 +62,10 @@ namespace PracticeTests
         {
             OpenDuckDuckGo();
 
-            var privacyLink = driver.FindElement(By.LinkText("Privacy"));
+            var privacyLink = _driver.FindElement(By.LinkText("Privacy"));
             privacyLink.Click();
 
-            Assert.That(driver.Title, Does.Contain("Privacy"));
+            Assert.That(_driver.Title, Does.Contain("Privacy"));
         }
 
         [Test]
@@ -76,58 +75,32 @@ namespace PracticeTests
         {
             OpenDuckDuckGo();
 
-            var searchBox = driver.FindElement(By.Name("q"));
+            var searchBox = _driver.FindElement(By.Name("q"));
             searchBox.SendKeys("nonexistentterm12345");
             searchBox.SendKeys(Keys.Enter);
 
-            Assert.That(driver.PageSource, Does.Contain("No results for"));
+            Assert.That(_driver.PageSource, Does.Contain("No results for"));
         }
 
         [AllureStep("Open DuckDuckGo homepage")]
         private void OpenDuckDuckGo()
         {
-            driver.Navigate().GoToUrl("https://www.duckduckgo.com");
+            _driver.Navigate().GoToUrl("https://www.duckduckgo.com");
         }
-
         [TearDown]
         public void Teardown()
         {
             if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed)
             {
-                CaptureScreenshot();
+                // Call the utility method to capture the screenshot
+                TestUtils.CaptureScreenshot(_driver);
             }
-            driver.Quit();
-            driver.Dispose();
+            _driver.Quit();
+            _driver.Dispose();
         }
-
-private void CaptureScreenshot()
-{
-    // Capture the screenshot
-    var screenshot = ((ITakesScreenshot)driver).GetScreenshot();
-
-    // Get the project root directory (two levels up from bin/Debug)
-    string projectRoot = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", ".."));
-
-    // Define the path to the screenshots folder in the project root
-    string screenshotsPath = Path.Combine(projectRoot, "screenshots");
-
-    // Ensure the screenshots directory exists in the project root directory
-    Directory.CreateDirectory(screenshotsPath);
-
-    // Get the current timestamp for unique file names (format: yyyy-MM-dd_HH-mm-ss)
-    string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-
-    // Define the screenshot file path with the timestamp and test name
-    string screenshotPath = Path.Combine(screenshotsPath, $"{TestContext.CurrentContext.Test.Name}_{timestamp}.png");
-
-    // Save the screenshot as a PNG file in the screenshots directory
-    screenshot.SaveAsFile(screenshotPath);
-
-    // Attach the screenshot to Allure report
-    TestContext.AddTestAttachment(screenshotPath);
-}
-
     }
+
+    
 
 [SetUpFixture]
     public class TestSetup
