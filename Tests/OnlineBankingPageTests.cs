@@ -10,11 +10,13 @@ namespace CSharpSeleniumFramework.Tests
 {
     [TestFixture]
     [AllureNUnit]
-    public class LoginPageTests
+    public class OnlineBankingPageTests
     {
         private IWebDriver _driver;
         private HomePage _homePage;
         private LoginPage _loginPage;
+
+        private OnlineBankingPage _onlineBankingPage;
 
         [SetUp]
         public void Setup()
@@ -22,23 +24,14 @@ namespace CSharpSeleniumFramework.Tests
             _driver = new ChromeDriver();
             _homePage = new HomePage(_driver);
             _loginPage = new LoginPage(_driver);
+            _onlineBankingPage = new OnlineBankingPage(_driver);
             _driver.Manage().Window.Maximize();
         }
 
         [Test]
-        [AllureFeature("Navigation")]
-        [AllureStory("Open the LoginPage successfully")]
-        public void NavigateToLoginPage()
-        {
-            _homePage.Visit();
-            _homePage.ClickSignInButton();
-            _loginPage.CheckLoginHeader();
-        }
-
-        [Test]
-        [AllureFeature("Login")]
-        [AllureStory("Log in to the application successfully")]
-        public void LoginSuccessful()
+        [AllureFeature("Online Banking")]
+        [AllureStory("Verify Online Banking page header")]
+        public void OnlineBankingPageHeader()
         {
 
             string username = "username";
@@ -48,24 +41,8 @@ namespace CSharpSeleniumFramework.Tests
             _homePage.ClickSignInButton();
             _loginPage.Login(username, password);
             _loginPage.ByPassSSLCertIssue();
-            _loginPage.CheckUsername(username);
-        }
-
-
-        [Test]
-        [AllureFeature("Login")]
-        [AllureStory("Log in unsuccessful")]
-        public void LoginUnsuccessful()
-        {
-
-            string username = "john";
-            string password = "password123";
-
-            _homePage.Visit();
-            _homePage.ClickSignInButton();
-            _loginPage.Login(username, password);
-            bool loginErrorDisplayed = _loginPage.LoginErrorDisplayed();
-            Assert.That(loginErrorDisplayed, "Login error message should be displayed, but it was not.");
+            _homePage.ClickOnlineBankingLink();
+            _onlineBankingPage.CheckOnlineBankingPageHeader();
         }
 
         [TearDown]

@@ -10,11 +10,12 @@ namespace CSharpSeleniumFramework.Tests
 {
     [TestFixture]
     [AllureNUnit]
-    public class LoginPageTests
+    public class TransferFundsPageTests
     {
         private IWebDriver _driver;
         private HomePage _homePage;
         private LoginPage _loginPage;
+        private TransferFundsPage _transferFundsPage;
 
         [SetUp]
         public void Setup()
@@ -22,50 +23,34 @@ namespace CSharpSeleniumFramework.Tests
             _driver = new ChromeDriver();
             _homePage = new HomePage(_driver);
             _loginPage = new LoginPage(_driver);
+            _transferFundsPage = new TransferFundsPage(_driver);
             _driver.Manage().Window.Maximize();
         }
 
         [Test]
-        [AllureFeature("Navigation")]
-        [AllureStory("Open the LoginPage successfully")]
-        public void NavigateToLoginPage()
-        {
-            _homePage.Visit();
-            _homePage.ClickSignInButton();
-            _loginPage.CheckLoginHeader();
-        }
-
-        [Test]
-        [AllureFeature("Login")]
-        [AllureStory("Log in to the application successfully")]
-        public void LoginSuccessful()
+        [AllureFeature("Transfer Funds")]
+        [AllureStory("Transfer funds from Savings account to Brokerage account")]
+        public void TransferBetweenAccountsSuccessful()
         {
 
             string username = "username";
             string password = "password";
+            string amount = "40.00";
+            string desc = "Savings Withdrawal for Investment in Brokerage Account";
+            string fromAccountType = "Savings";
+            string toAccountType = "Brokerage";
 
             _homePage.Visit();
             _homePage.ClickSignInButton();
             _loginPage.Login(username, password);
             _loginPage.ByPassSSLCertIssue();
-            _loginPage.CheckUsername(username);
-        }
-
-
-        [Test]
-        [AllureFeature("Login")]
-        [AllureStory("Log in unsuccessful")]
-        public void LoginUnsuccessful()
-        {
-
-            string username = "john";
-            string password = "password123";
-
-            _homePage.Visit();
-            _homePage.ClickSignInButton();
-            _loginPage.Login(username, password);
-            bool loginErrorDisplayed = _loginPage.LoginErrorDisplayed();
-            Assert.That(loginErrorDisplayed, "Login error message should be displayed, but it was not.");
+            _homePage.ClickTransferFundLink();
+            _transferFundsPage.SelectFromToAccounts();
+            _transferFundsPage.EnterAmountAndDesc(amount, desc);
+            _transferFundsPage.ClickContinue();
+            _transferFundsPage.CheckVerfiyDetails(fromAccountType, toAccountType);
+            _transferFundsPage.ClickContinue();
+            _transferFundsPage.CheckSuccessMessageIsDisplayed();
         }
 
         [TearDown]
