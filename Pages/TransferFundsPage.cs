@@ -60,12 +60,17 @@ namespace CSharpSeleniumFramework.Pages
         }
 
 
-        public void CheckVerifyDetails()
+        public void CheckFromAccount(string fromAccountType)
         {
             IWebElement inputElementFrom = _wait.Until(ExpectedConditions.ElementIsVisible(_fromAccountDD));
             string actualValue = inputElementFrom.GetAttribute("value");
-            Assert.That(actualValue, Is.EqualTo("Savings"), "The account type does not match");
+            Assert.That(actualValue, Is.EqualTo(fromAccountType), "The account type does not match");
+        }
 
+        public void CheckToAccount(string toAccountType){
+            IWebElement inputElementFrom = _wait.Until(ExpectedConditions.ElementIsVisible(_toAccountDD));
+            string actualValue = inputElementFrom.GetAttribute("value");
+            Assert.That(actualValue, Is.EqualTo(toAccountType), "The account type does not match");
         }
 
         public void CheckSuccessMessageIsDisplayed()

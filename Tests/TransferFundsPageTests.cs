@@ -51,7 +51,8 @@ namespace CSharpSeleniumFramework.Tests
             _transferFundsPage.SelectToAccount(toAccountTypeValue);
             _transferFundsPage.EnterAmountAndDesc(amount, desc);
             _transferFundsPage.ClickContinue();
-            _transferFundsPage.CheckVerifyDetails();
+            _transferFundsPage.CheckFromAccount(fromAccountTypeText);
+            _transferFundsPage.CheckToAccount(toAccountTypeText);
             _transferFundsPage.ClickContinue();
             _transferFundsPage.CheckSuccessMessageIsDisplayed();
         }
