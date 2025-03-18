@@ -54,11 +54,15 @@ namespace CSharpSeleniumFramework.Pages
             _driver.FindElement(_desc).SendKeys(desc);
         }
 
+        public void EnterDesc(String desc)
+        {
+            _driver.FindElement(_desc).SendKeys(desc);
+        }
+
         public void ClickContinue()
         {
             _driver.FindElement(_continueButton).Click();
         }
-
 
         public void CheckFromAccount(string fromAccountType)
         {
@@ -67,7 +71,8 @@ namespace CSharpSeleniumFramework.Pages
             Assert.That(actualValue, Is.EqualTo(fromAccountType), "The account type does not match");
         }
 
-        public void CheckToAccount(string toAccountType){
+        public void CheckToAccount(string toAccountType)
+        {
             IWebElement inputElementFrom = _wait.Until(ExpectedConditions.ElementIsVisible(_toAccountDD));
             string actualValue = inputElementFrom.GetAttribute("value");
             Assert.That(actualValue, Is.EqualTo(toAccountType), "The account type does not match");
@@ -76,6 +81,13 @@ namespace CSharpSeleniumFramework.Pages
         public void CheckSuccessMessageIsDisplayed()
         {
             Assert.That(_driver.FindElement(_alertSuccessMessage).Displayed, "Alert message is not displayed.");
+        }
+
+        public void CheckAmountCannotBeBlank()
+        {
+            var amountField = _wait.Until(ExpectedConditions.ElementIsVisible(_amount));
+            string validationMessage = amountField.GetAttribute("validationMessage");
+            Assert.That(validationMessage, Is.EqualTo("Please fill in this field."), "Validation message not displayed");
         }
     }
 }
