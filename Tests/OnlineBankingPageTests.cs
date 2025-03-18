@@ -26,6 +26,14 @@ namespace CSharpSeleniumFramework.Tests
             _loginPage = new LoginPage(_driver);
             _onlineBankingPage = new OnlineBankingPage(_driver);
             _driver.Manage().Window.Maximize();
+
+            // Login
+            string username = "username";
+            string password = "password";
+            _homePage.Visit();
+            _homePage.ClickSignInButton();
+            _loginPage.Login(username, password);
+            _loginPage.ByPassSSLCertIssue();
         }
 
         [Test]
@@ -33,14 +41,6 @@ namespace CSharpSeleniumFramework.Tests
         [AllureStory("Verify Online Banking page header")]
         public void OnlineBankingPageHeader()
         {
-
-            string username = "username";
-            string password = "password";
-
-            _homePage.Visit();
-            _homePage.ClickSignInButton();
-            _loginPage.Login(username, password);
-            _loginPage.ByPassSSLCertIssue();
             _homePage.ClickOnlineBankingLink();
             _onlineBankingPage.CheckOnlineBankingPageHeader();
         }
