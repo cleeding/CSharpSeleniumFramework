@@ -15,14 +15,14 @@ namespace CSharpSeleniumFramework.Pages
 
         // Selectors
         private By _h2Header = By.TagName("h2");
-        private By _fromAccountDD = By.Id("c");
-        private By _fromAccountDDVSavingsAcc = By.CssSelector("#tf_fromAccountId > option:nth-child(1)");
+        private By _fromAccountDD = By.Id("tf_fromAccountId");
+        //private By _fromAccountDDVSavingsAcc = By.CssSelector("#tf_fromAccountId > option:nth-child(1)");
         private By _toAccountDD = By.Id("tf_toAccountId");
-        private By _toAccountDDVBrokerage = By.CssSelector("#tf_toAccountId > option:nth-child(6)");
+        //private By _toAccountDDVBrokerage = By.CssSelector("#tf_toAccountId > option:nth-child(6)");
         private By _amount = By.Id("tf_amount");
         private By _desc = By.Id("tf_description");
         private By _continueButton = By.Id("btn_submit");
-        private By _alertSuccessMessage = By.ClassName(".alert.alert-success");
+        private By _alertSuccessMessage = By.CssSelector(".alert.alert-success");
 
         // Constructor
         public TransferFundsPage(IWebDriver driver)
@@ -38,11 +38,14 @@ namespace CSharpSeleniumFramework.Pages
             Assert.That(h2Header, Is.EqualTo(_pageHeader), "The page header text does not match");
         }
 
-        public void SelectFromToAccounts()
+        public void SelectFromAccount(string fromAccountType)
         {
-            _driver.FindElement(_fromAccountDD).Click();
-            _driver.FindElement(_fromAccountDDVSavingsAcc).Click();
-            _driver.FindElement(_toAccountDDVBrokerage).Click();
+            new SelectElement(_driver.FindElement(_fromAccountDD)).SelectByValue(fromAccountType);
+        }
+
+        public void SelectToAccount(string toAccountType)
+        {
+            new SelectElement(_driver.FindElement(_toAccountDD)).SelectByValue(toAccountType);
         }
 
         public void EnterAmountAndDesc(String amount, String desc)
@@ -57,20 +60,17 @@ namespace CSharpSeleniumFramework.Pages
         }
 
 
-        public void CheckVerfiyDetails(String fromAccountType, string toAccountType)
+        public void CheckVerifyDetails()
         {
-            IWebElement inputElementFrom = _driver.FindElement(_fromAccountDD);
-            string fromAccount = inputElementFrom.GetAttribute("value");
-            IWebElement inputElementTo = _driver.FindElement(_toAccountDD);
-            string toAccount = inputElementTo.GetAttribute("value");
-            Assert.That(fromAccount, Is.EqualTo(fromAccountType), "The account type does not match");
-            Assert.That(toAccount, Is.EqualTo(toAccountType), "The account type does not match");
+            IWebElement inputElementFrom = _wait.Until(ExpectedConditions.ElementIsVisible(_fromAccountDD));
+            string actualValue = inputElementFrom.GetAttribute("value");
+            Assert.That(actualValue, Is.EqualTo("Savings"), "The account type does not match");
+
         }
 
         public void CheckSuccessMessageIsDisplayed()
         {
-            var alertSuccess = _driver.FindElement(_alertSuccessMessage);
-            Assert.Equals(alertSuccess.Displayed, " Alert message is not displayed.");
+            Assert.That(_driver.FindElement(_alertSuccessMessage).Displayed, "Alert message is not displayed.");
         }
     }
 }

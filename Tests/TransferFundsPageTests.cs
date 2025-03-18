@@ -37,18 +37,21 @@ namespace CSharpSeleniumFramework.Tests
             string password = "password";
             string amount = "40.00";
             string desc = "Savings Withdrawal for Investment in Brokerage Account";
-            string fromAccountType = "Savings";
-            string toAccountType = "Brokerage";
+            string fromAccountTypeValue = "1";
+            string toAccountTypeValue = "6";
+            string fromAccountTypeText = "Savings";
+            string toAccountTypeText = "Brokerage";
 
             _homePage.Visit();
             _homePage.ClickSignInButton();
             _loginPage.Login(username, password);
             _loginPage.ByPassSSLCertIssue();
             _homePage.ClickTransferFundLink();
-            _transferFundsPage.SelectFromToAccounts();
+            _transferFundsPage.SelectFromAccount(fromAccountTypeValue);
+            _transferFundsPage.SelectToAccount(toAccountTypeValue);
             _transferFundsPage.EnterAmountAndDesc(amount, desc);
             _transferFundsPage.ClickContinue();
-            _transferFundsPage.CheckVerfiyDetails(fromAccountType, toAccountType);
+            _transferFundsPage.CheckVerifyDetails();
             _transferFundsPage.ClickContinue();
             _transferFundsPage.CheckSuccessMessageIsDisplayed();
         }
