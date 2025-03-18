@@ -6,12 +6,10 @@ using SeleniumExtras.WaitHelpers;
 
 namespace CSharpSeleniumFramework.Pages
 {
-    public class LoginPage
+    public class LoginPage : BasePage
     {
         // Fields
         private readonly string _pageHeader = "Log in to ZeroBank";
-        private readonly IWebDriver _driver;
-        private readonly WebDriverWait _wait;
 
         // Selectors
         private By _h3Header = By.ClassName("page-header");
@@ -22,11 +20,7 @@ namespace CSharpSeleniumFramework.Pages
         private By _loginErrorMessage = By.CssSelector(".alert.alert-error");
 
         // Constructor
-        public LoginPage(IWebDriver driver)
-        {
-            _driver = driver;
-            _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-        }
+        public LoginPage(IWebDriver driver) : base(driver){}
 
         // Methods
         public void CheckLoginHeader()

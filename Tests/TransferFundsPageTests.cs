@@ -13,6 +13,7 @@ namespace CSharpSeleniumFramework.Tests
     public class TransferFundsPageTests
     {
         private IWebDriver _driver;
+        private BasePage _basePage;
         private HomePage _homePage;
         private LoginPage _loginPage;
         private TransferFundsPage _transferFundsPage;
@@ -21,6 +22,7 @@ namespace CSharpSeleniumFramework.Tests
         public void Setup()
         {
             _driver = new ChromeDriver();
+            _basePage = new BasePage(_driver);
             _homePage = new HomePage(_driver);
             _loginPage = new LoginPage(_driver);
             _transferFundsPage = new TransferFundsPage(_driver);
@@ -29,7 +31,7 @@ namespace CSharpSeleniumFramework.Tests
             // Login
             string username = "username";
             string password = "password";
-            _homePage.Visit();
+             _basePage.VisitSite();
             _homePage.ClickSignInButton();
             _loginPage.Login(username, password);
             _loginPage.ByPassSSLCertIssue();

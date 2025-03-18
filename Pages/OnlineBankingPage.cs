@@ -6,22 +6,16 @@ using SeleniumExtras.WaitHelpers;
 
 namespace CSharpSeleniumFramework.Pages
 {
-    public class OnlineBankingPage
+    public class OnlineBankingPage : BasePage
     {
         // Fields
         private readonly string _pageHeader = "Online Banking";
-        private readonly IWebDriver _driver;
-        private readonly WebDriverWait _wait;
 
         // Selectors
         private By _h1Header = By.TagName("h1");
 
         // Constructor
-        public OnlineBankingPage(IWebDriver driver)
-        {
-            _driver = driver;
-            _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-        }
+        public OnlineBankingPage(IWebDriver driver) : base(driver){}
 
         // Methods
         public void CheckOnlineBankingPageHeader()
