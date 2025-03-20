@@ -13,8 +13,8 @@ namespace CSharpSeleniumFramework.Tests
     public class LoginPageTests : BaseTest
     {
         [Test]
-        [AllureFeature("Navigation")]
-        [AllureStory("Open the LoginPage successfully")]
+        [AllureFeature("Login - Navigation")]
+        [AllureStory("Open the Login page")]
         public void NavigateToLoginPage()
         {
             _basePage.VisitSite();
@@ -38,13 +38,13 @@ namespace CSharpSeleniumFramework.Tests
             _loginPage.CheckUsername(username);
         }
 
-        [TestCase("john", "password123")]
-        [TestCase("john", "")]
+        [TestCase("username", "password123")]
+        [TestCase("username", "")]
         [TestCase("", "password123")]
         [TestCase("", "")]
         [Test]
         [AllureFeature("Login")]
-        [AllureStory("Log in unsuccessful")]
+        [AllureStory("Unsuccessful login attempt")]
         public void LoginUnsuccessful(string username, string password)
         {
             _basePage.VisitSite();
