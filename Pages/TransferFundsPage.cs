@@ -6,12 +6,10 @@ using SeleniumExtras.WaitHelpers;
 
 namespace CSharpSeleniumFramework.Pages
 {
-    public class TransferFundsPage
+    public class TransferFundsPage : BasePage
     {
         // Fields
         private readonly string _pageHeader = "Transfer Money & Make Payments";
-        private readonly IWebDriver _driver;
-        private readonly WebDriverWait _wait;
 
         // Selectors
         private By _h2Header = By.TagName("h2");
@@ -25,11 +23,7 @@ namespace CSharpSeleniumFramework.Pages
         private By _alertSuccessMessage = By.CssSelector(".alert.alert-success");
 
         // Constructor
-        public TransferFundsPage(IWebDriver driver)
-        {
-            _driver = driver;
-            _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-        }
+        public TransferFundsPage(IWebDriver driver) : base(driver){}
 
         // Methods
         public void CheckTransferFundsPageHeader()
