@@ -38,16 +38,15 @@ namespace CSharpSeleniumFramework.Tests
             _loginPage.CheckUsername(username);
         }
 
-
+        [TestCase("john", "password123")]
+        [TestCase("john", "")]
+        [TestCase("", "password123")]
+        [TestCase("", "")]
         [Test]
         [AllureFeature("Login")]
         [AllureStory("Log in unsuccessful")]
-        public void LoginUnsuccessful()
+        public void LoginUnsuccessful(string username, string password)
         {
-
-            string username = "john";
-            string password = "password123";
-
             _basePage.VisitSite();
             _homePage.ClickSignInButton();
             _loginPage.Login(username, password);
