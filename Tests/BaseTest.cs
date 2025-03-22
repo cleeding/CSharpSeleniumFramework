@@ -14,16 +14,26 @@ namespace CSharpSeleniumFramework.Tests
         protected BasePage _basePage;
         protected HomePage _homePage;
         protected LoginPage _loginPage;
+        protected OnlineBankingPage _onlineBankingPage;
+        protected TransferFundsPage _transferFundsPage;
+        protected AccountActivityPage _accountActivityPage;
 
         [SetUp]
-        public void Setup()
+        public virtual void Setup()
         {
             _driver = new ChromeDriver();
             _basePage = new BasePage(_driver);
             _homePage = new HomePage(_driver);
             _loginPage = new LoginPage(_driver);
+            _onlineBankingPage = new OnlineBankingPage(_driver);
+            _transferFundsPage = new TransferFundsPage(_driver);
+            _accountActivityPage = new AccountActivityPage(_driver);
             _driver.Manage().Window.Maximize();
+
+            //Visit the application
+            _basePage.VisitSite();
         }
+
         [TearDown]
         public void Teardown()
         {

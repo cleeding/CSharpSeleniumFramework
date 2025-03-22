@@ -17,7 +17,6 @@ namespace CSharpSeleniumFramework.Tests
         [AllureStory("Open the Login page")]
         public void NavigateToLoginPage()
         {
-            _basePage.VisitSite();
             _homePage.ClickSignInButton();
             _loginPage.CheckLoginHeader();
         }
@@ -31,7 +30,6 @@ namespace CSharpSeleniumFramework.Tests
             string username = "username";
             string password = "password";
 
-            _basePage.VisitSite();
             _homePage.ClickSignInButton();
             _loginPage.Login(username, password);
             _loginPage.ByPassSSLCertIssue();
@@ -47,7 +45,6 @@ namespace CSharpSeleniumFramework.Tests
         [AllureStory("Unsuccessful login attempt")]
         public void LoginUnsuccessful(string username, string password)
         {
-            _basePage.VisitSite();
             _homePage.ClickSignInButton();
             _loginPage.Login(username, password);
             bool loginErrorDisplayed = _loginPage.LoginErrorDisplayed();

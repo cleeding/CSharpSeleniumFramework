@@ -10,28 +10,15 @@ namespace CSharpSeleniumFramework.Tests
 {
     [TestFixture]
     [AllureNUnit]
-    public class TransferFundsPageTests
+    public class TransferFundsPageTests : BaseTest
     {
-        private IWebDriver _driver;
-        private BasePage _basePage;
-        private HomePage _homePage;
-        private LoginPage _loginPage;
-        private TransferFundsPage _transferFundsPage;
-
         [SetUp]
-        public void Setup()
+        public override void Setup()
         {
-            _driver = new ChromeDriver();
-            _basePage = new BasePage(_driver);
-            _homePage = new HomePage(_driver);
-            _loginPage = new LoginPage(_driver);
-            _transferFundsPage = new TransferFundsPage(_driver);
-            _driver.Manage().Window.Maximize();
-
+            base.Setup();
             // Login
             string username = "username";
             string password = "password";
-             _basePage.VisitSite();
             _homePage.ClickSignInButton();
             _loginPage.Login(username, password);
             _loginPage.ByPassSSLCertIssue();
@@ -75,18 +62,6 @@ namespace CSharpSeleniumFramework.Tests
             _transferFundsPage.EnterDesc(desc);
             _transferFundsPage.ClickContinue();
             _transferFundsPage.CheckAmountCannotBeBlank();
-        }
-
-        [TearDown]
-        public void Teardown()
-        {
-            if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed)
-            {
-                // Call the utility method to capture the screenshot
-                TestUtils.CaptureScreenshot(_driver);
-            }
-            _driver.Quit();
-            _driver.Dispose();
         }
     }
 }

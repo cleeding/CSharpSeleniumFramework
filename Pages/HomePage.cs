@@ -11,11 +11,11 @@ namespace CSharpSeleniumFramework.Pages
         private By _homePageNavBar = By.ClassName("navbar-inner");
         private By _signInButton = By.Id("signin_button");
         private By _onlineBankingLink = By.Id("onlineBankingMenu");
+        private By _checkingAccountActivityLink = By.Id("account_activity_link");
         private By _transferFundsLink = By.Id("transfer_funds_link");
         private By _usernameNavBarSection = By.ClassName("icon-user");
         private By _logoutLink = By.Id("logout_link");
         private By _usernameSection = By.CssSelector(".dropdown:nth-of-type(2)");
-
 
         // Constructor
         public HomePage(IWebDriver driver) : base(driver) { }
@@ -34,6 +34,10 @@ namespace CSharpSeleniumFramework.Pages
         public void ClickOnlineBankingLink()
         {
             _driver.FindElement(_onlineBankingLink).Click();
+        }
+
+        public void ClickCheckingAccountActivityLink(){
+            ClickElement(_checkingAccountActivityLink);
         }
 
         public void ClickTransferFundLink()
