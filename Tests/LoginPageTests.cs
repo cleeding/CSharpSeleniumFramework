@@ -13,11 +13,10 @@ namespace CSharpSeleniumFramework.Tests
     public class LoginPageTests : BaseTest
     {
         [Test]
-        [AllureFeature("Navigation")]
-        [AllureStory("Open the LoginPage successfully")]
+        [AllureFeature("Login - Navigation")]
+        [AllureStory("Open the Login page")]
         public void NavigateToLoginPage()
         {
-            _basePage.VisitSite();
             _homePage.ClickSignInButton();
             _loginPage.CheckLoginHeader();
         }
@@ -31,24 +30,21 @@ namespace CSharpSeleniumFramework.Tests
             string username = "username";
             string password = "password";
 
-            _basePage.VisitSite();
             _homePage.ClickSignInButton();
             _loginPage.Login(username, password);
             _loginPage.ByPassSSLCertIssue();
             _loginPage.CheckUsername(username);
         }
 
-
+        [TestCase("username", "password123")]
+        [TestCase("username", "")]
+        [TestCase("", "password123")]
+        [TestCase("", "")]
         [Test]
         [AllureFeature("Login")]
-        [AllureStory("Log in unsuccessful")]
-        public void LoginUnsuccessful()
+        [AllureStory("Unsuccessful login attempt")]
+        public void LoginUnsuccessful(string username, string password)
         {
-
-            string username = "john";
-            string password = "password123";
-
-            _basePage.VisitSite();
             _homePage.ClickSignInButton();
             _loginPage.Login(username, password);
             bool loginErrorDisplayed = _loginPage.LoginErrorDisplayed();
