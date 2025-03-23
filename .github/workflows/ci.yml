@@ -29,10 +29,15 @@ jobs:
         run: dotnet build --no-restore
 
       - name: Run Selenium Tests
-        run: dotnet test --logger "trx;LogFileName=test-results.trx" --results-directory TestResults
+        run: |
+          mkdir -p TestResults  # Ensure the directory exists
+          dotnet test --logger "trx;LogFileName=test-results.trx" --results-directory TestResults
+
+      - name: List Test Results Directory
+        run: ls -R TestResults  # List contents of TestResults directory for debugging
 
       - name: Upload Test Results
         uses: actions/upload-artifact@v3
         with:
           name: TestResults
-          path: TestResults
+          path: TestResults/*
