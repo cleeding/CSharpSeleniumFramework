@@ -29,7 +29,9 @@ namespace CSharpSeleniumFramework.Tests
             // Conditionally add user data dir for CI environment (GitHub Actions)
             if (Environment.GetEnvironmentVariable("GITHUB_ACTIONS") != null)
             {
-                options.AddArguments($"--user-data-dir=/tmp/chrome-{Guid.NewGuid()}"); // Unique directory for CI
+                // Generate a unique directory for each test run in GitHub Actions
+                var userDataDir = Path.Combine(Path.GetTempPath(), "chrome-user-data-dir", Guid.NewGuid().ToString());
+                options.AddArguments($"--user-data-dir={userDataDir}");  // Unique directory for each test session
             }
             
             _driver = new ChromeDriver();
