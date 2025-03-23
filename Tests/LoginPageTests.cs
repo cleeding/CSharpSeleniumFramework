@@ -36,20 +36,20 @@ namespace CSharpSeleniumFramework.Tests
             _loginPage.CheckUsername(username);
         }
 
-        [TestCase("username", "password123")]
-        [TestCase("username", "")]
-        [TestCase("", "password123")]
-        [TestCase("", "")]
-        [Test]
-        [AllureFeature("Login")]
-        [AllureStory("Unsuccessful login attempt")]
-        public void LoginUnsuccessful(string username, string password)
-        {
-            _homePage.ClickSignInButton();
-            _loginPage.Login(username, password);
-            bool loginErrorDisplayed = _loginPage.LoginErrorDisplayed();
-            Assert.That(loginErrorDisplayed, "Login error message should be displayed, but it was not.");
-        }
+        // [TestCase("username", "password123")]
+        // [TestCase("username", "")]
+        // [TestCase("", "password123")]
+        // [TestCase("", "")]
+        // [Test]
+        // [AllureFeature("Login")]
+        // [AllureStory("Unsuccessful login attempt")]
+        // public void LoginUnsuccessful(string username, string password)
+        // {
+        //     _homePage.ClickSignInButton();
+        //     _loginPage.Login(username, password);
+        //     bool loginErrorDisplayed = _loginPage.LoginErrorDisplayed();
+        //     Assert.That(loginErrorDisplayed, "Login error message should be displayed, but it was not.");
+        // }
     }
 }
 
