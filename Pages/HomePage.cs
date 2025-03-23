@@ -1,3 +1,4 @@
+using Allure.NUnit.Attributes;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -21,41 +22,50 @@ namespace CSharpSeleniumFramework.Pages
         public HomePage(IWebDriver driver) : base(driver) { }
 
         // Methods
+        [AllureStep("Checking the home page nav bar is displayed by returning true or false")]
         public bool IsHomePageDisplayed()
         {
             return _driver.FindElement(_homePageNavBar).Displayed;
         }
 
+        [AllureStep("Clicking the sign in button")]
         public void ClickSignInButton()
         {
             _driver.FindElement(_signInButton).Click();
         }
 
+        [AllureStep("Clicking the Online Banking link")]
         public void ClickOnlineBankingLink()
         {
             _driver.FindElement(_onlineBankingLink).Click();
         }
 
-        public void ClickCheckingAccountActivityLink(){
+        [AllureStep("Clicking the Checking Account Activity link")]
+        public void ClickCheckingAccountActivityLink()
+        {
             ClickElement(_checkingAccountActivityLink);
         }
 
+        [AllureStep("Clicking the Transfer Fund link")]
         public void ClickTransferFundLink()
         {
             _driver.FindElement(_transferFundsLink).Click();
         }
 
+        [AllureStep("Clicking the Logout link")]
         public void ClickLogoutLink()
         {
             ClickElement(_usernameNavBarSection);
             ClickElement(_logoutLink);
         }
 
+        [AllureStep("Checking the Sign in button is displayed by returning true or false")]
         public bool CheckSigninButtonDisplayed()
         {
             return _driver.FindElement(_signInButton).Displayed;
 
         }
+         [AllureStep("Checking the Username section in the nav bar is not displayed")]
         public bool CheckUsernameSectionIsNotDisplayed()
         {
             var elements = _driver.FindElements(_usernameSection); // Returns a list of matching elements

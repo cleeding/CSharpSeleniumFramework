@@ -27,6 +27,7 @@ namespace CSharpSeleniumFramework.Tests
         [Test]
         [AllureFeature("Transfer Funds")]
         [AllureStory("Transfer funds from Savings account to Brokerage account")]
+        [AllureTag("Regression", "Banking")]
         public void TransferBetweenAccountsSuccessful()
         {
             string fromAccountTypeValue = "1";
@@ -50,6 +51,7 @@ namespace CSharpSeleniumFramework.Tests
         [Test]
         [AllureFeature("Transfer Funds")]
         [AllureStory("Attempt to tranfer funds without amount populated")]
+        [AllureTag("Regression", "Banking")]
         public void TranferBetweenAccountsBlankAmount()
         {
             string desc = "Savings Withdrawal for Investment in Brokerage Account";

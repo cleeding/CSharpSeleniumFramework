@@ -22,21 +22,30 @@ namespace CSharpSeleniumFramework.Tests
             _homePage.ClickSignInButton();
             _loginPage.Login(username, password);
             _loginPage.ByPassSSLCertIssue();
+            _homePage.ClickCheckingAccountActivityLink();
         }
-
-
+        
         [Test]
         [AllureFeature("Account Activity")]
         [AllureStory("Check Account Activity page title matches expected string")]
         public void CheckAccountActivityPageTitle()
         {
-            _homePage.ClickCheckingAccountActivityLink();
             _accountActivityPage.CheckPageTitle(_accountActivityPage._pageTitle);
+        }
+
+        [Test]
+        [AllureFeature("Account Activity")]
+        [AllureStory("Check Account Activity page tab panel header is displayed")]
+        public void CheckAccountActivityPageTabHeaderDisplayed()
+        {
+            _accountActivityPage.CheckTabPanelHeaderIsDisplayed();
         }
 
         [Test]
         [AllureFeature("Find Transactions")]
         [AllureStory("Find Transactions using a blank search")]
+        [AllureTag("Regression", "Banking")]
+        [Category("Banking")]
         public void FindTransactionsBlankSearch()
         {
             string date = "2012-09-06";
@@ -44,10 +53,40 @@ namespace CSharpSeleniumFramework.Tests
             string deposit = "984.3";
             string withdrawal = "";
 
-            _homePage.ClickCheckingAccountActivityLink();
             _accountActivityPage.ClickFindTransactionsTab();
             _accountActivityPage.ClickFindButton();
             _accountActivityPage.CheckTransactionRowData(date, description, deposit, withdrawal);
+        }
+
+        [Test]
+        [AllureFeature("Find Transactions")]
+        [AllureStory("Find Transaction(s) of type Withdrawal")]
+        [AllureTag("Regression", "Banking")]
+        [Category("Banking")]
+        public void FindTransactionsWithdrawalType()
+        {
+            // Search parameters
+            string descriptionField = "OFFICE";
+            string fromDateField = "2012-09-01";
+            string toDateField = "2012-09-30";
+            string fromAmountField = "10";
+            string toAmountField = "100";
+            string typeField = "Withdrawal";
+            
+            // Expected data
+            string date = "2012-09-05";
+            string description = "OFFICE SUPPLY";
+            string deposit = "";
+            string withdrawal = "50";
+
+            // Perform search
+            _accountActivityPage.ClickFindTransactionsTab();
+            _accountActivityPage.CompleteFindTransactionSearchParameters(descriptionField, fromDateField, toDateField, fromAmountField, toAmountField, typeField);
+            _accountActivityPage.ClickFindButton();
+            
+            // Verfy results
+            _accountActivityPage.CheckTransactionRowData(date, description, deposit, withdrawal);
+
         }
     }
 }

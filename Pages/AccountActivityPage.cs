@@ -11,6 +11,12 @@ namespace CSharpSeleniumFramework.Pages
         // Selectors
         public string _pageTitle = "Zero - Account Activity";
         private By _findTransactionsTab = By.CssSelector("a[href='#ui-tabs-2']");
+        private By _descriptionField = By.Id("aa_description");
+        private By _fromDateField = By.Id("aa_fromDate");
+        private By _toDateField = By.Id("aa_toDate");
+        private By _fromAmountField = By.Id("aa_fromAmount");
+        private By _toAmountField = By.Id("aa_toAmount");
+        private By _typeField = By.Id("aa_type");
         private By _findButton = By.CssSelector(".btn.btn-primary");
         private By _dateColumn = By.CssSelector("#filtered_transactions_for_account table tr:nth-child(1) td:nth-child(1)");
         private By _descriptionColumn = By.CssSelector("#filtered_transactions_for_account table tr:nth-child(1) td:nth-child(2)");
@@ -32,6 +38,11 @@ namespace CSharpSeleniumFramework.Pages
             ClickElement(_findButton);
         }
 
+        public void CheckTabPanelHeaderIsDisplayed(){
+            var element = _driver.FindElement(_h2Header).Displayed;
+            Assert.That(element, Is.True);
+        }
+
         public void CheckTransactionRowData(string date, string description, string deposit, string wtihdrawal)
         {
             // Explicit wait to check if the element is visible
@@ -47,6 +58,19 @@ namespace CSharpSeleniumFramework.Pages
             Assert.That(descriptionElement.Text, Is.EqualTo(description));
             Assert.That(depositColumn.Text, Is.EqualTo(deposit));
             Assert.That(withdrawlColumn.Text, Is.EqualTo(wtihdrawal));
+        }
+
+        public void CompleteFindTransactionSearchParameters(string description, string fromDate, string toDate, string fromAmount, string toAmount, string type)
+        {
+            // Explicit wait to check if the element is visible
+            _wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(_descriptionField));
+
+            SendText(_descriptionField, true, description);
+            SendText(_fromDateField, true, fromDate);
+            SendText(_toDateField, true, toDate);
+            SendText(_fromAmountField, true, fromAmount);
+            SendText(_toAmountField, true, toAmount);
+            SendText(_typeField, false, type);
         }
     }
 }
