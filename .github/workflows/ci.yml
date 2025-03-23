@@ -37,7 +37,7 @@ jobs:
         run: ls -R TestResults  # List contents of TestResults directory for debugging
 
       - name: Upload Test Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: TestResults
           path: TestResults/*
