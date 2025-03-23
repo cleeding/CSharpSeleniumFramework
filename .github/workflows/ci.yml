@@ -36,8 +36,13 @@ jobs:
       - name: List Test Results Directory
         run: ls -R TestResults  # List contents of TestResults directory for debugging
 
-      - name: Upload Test Results
-        uses: actions/upload-artifact@v2  # Explicitly using v2 here
+      - name: Create a Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
         with:
-          name: TestResults
-          path: TestResults/*
+          files: TestResults/*  # Path to your test result files (could be modified if needed)
+
+      - name: Upload Test Results as Release Asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: TestResults/*
