@@ -3,10 +3,11 @@ name: Run Selenium Tests
 on:
   push:
     branches:
-      - master  # Change this to master if you're using master as your default branch
+      - master  # Triggers on push to master
   pull_request:
     branches:
-      - master  # Same here, update to master
+      - master  # Triggers on pull request targeting master
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
 
 jobs:
   test:
