@@ -22,14 +22,21 @@ namespace CSharpSeleniumFramework.Tests
         public virtual void Setup()
         {
             var options = new ChromeOptions();
-            
+
             // Common Chrome options for both local and CI environments
             options.AddArguments("headless", "disable-gpu", "window-size=1280x1024", "no-sandbox");
 
-            // Conditionally add user data dir for CI environment (GitHub Actions)
+            // If running on GitHub Actions, we can remove the user-data-dir completely
             if (Environment.GetEnvironmentVariable("GITHUB_ACTIONS") != null)
             {
-                options.AddArguments($"--user-data-dir=/tmp/chrome-{Guid.NewGuid()}"); // Unique directory for CI
+                // Don't use --user-data-dir in CI (GitHub Actions) for uniqueness
+                options.AddArguments("incognito"); // Use incognito mode instead for isolation
+            }
+            else
+            {
+                // Optionally, use --user-data-dir for local testing, if you want persistent sessions
+                var userDataDir = Path.Combine(Path.GetTempPath(), "chrome-user-data-dir", Guid.NewGuid().ToString());
+                options.AddArguments($"--user-data-dir={userDataDir}");  // Unique directory for each session
             }
             
             _driver = new ChromeDriver();
