@@ -3,15 +3,15 @@ name: Run Selenium Tests
 on:
   push:
     branches:
-      - master  # Triggers on push to master
+      - master
   pull_request:
     branches:
-      - master  # Triggers on pull request targeting master
-  workflow_dispatch:  # Allows manual trigger from GitHub UI
+      - master
+  workflow_dispatch:
 
 jobs:
   test:
-    runs-on: ubuntu-latest  # Change to windows-latest if needed
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
@@ -20,7 +20,12 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.406'  # Use the correct .NET version for your project
+          dotnet-version: '8.0.406'
+
+      - name: Install Allure CLI
+        run: |
+          sudo apt update
+          sudo apt install -y allure
 
       - name: Restore Dependencies
         run: dotnet restore
@@ -28,19 +33,25 @@ jobs:
       - name: Build the Project
         run: dotnet build --no-restore
 
-      - name: Run Selenium Tests
+      - name: Run Selenium Tests with Allure Logger
         run: |
-          mkdir -p TestResults  # Ensure the directory exists
-          dotnet test --logger "trx;LogFileName=test-results.trx" --results-directory TestResults
+          mkdir -p allure-results  # Ensure allure-results directory exists
+          dotnet test --logger "allure;allure-results=allure-results" --results-directory TestResults
 
-      - name: List Test Results Directory
-        run: ls -R TestResults  # List contents of TestResults directory for debugging
+      - name: List Allure Results Directory
+        run: ls -R allure-results  # Debugging: check if allure-results folder is generated
+
+      - name: Upload Allure Results as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-results
+          path: allure-results  # Upload the allure-results directory as an artifact
 
       - name: Create a Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          files: TestResults/*  # Path to your test result files (could be modified if needed)
+          files: TestResults/*
 
       - name: Upload Test Results as Release Asset
         uses: softprops/action-gh-release@v1
