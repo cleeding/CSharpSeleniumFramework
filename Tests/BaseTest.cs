@@ -23,7 +23,17 @@ namespace CSharpSeleniumFramework.Tests
         public virtual void Setup()
         {
             var options = new ChromeOptions();
-            options.AddArguments("headless", "disable-gpu", "window-size=1280x1024", "no-sandbox", "incognito");
+            options.AddArguments(
+                "--headless=new",  // Use new headless mode (Chrome 109+)
+                "--disable-gpu",   // Disable GPU (helps in headless mode)
+                "--window-size=1280x1024", // Ensure proper viewport size
+                "--no-sandbox",    // Bypass OS security restrictions (needed in CI/CD)
+                "--disable-dev-shm-usage", // Prevents crashes in Docker/Linux environments
+                "--disable-blink-features=AutomationControlled", // Reduces bot detection
+                "--disable-extensions", // Ensures no unwanted browser extensions
+                "--disable-popup-blocking", // Prevents unexpected popups
+                "--remote-debugging-port=9222" // Useful for debugging headless runs
+            );
 
             _driver = new ChromeDriver(options);
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20); // Global implicit wait
