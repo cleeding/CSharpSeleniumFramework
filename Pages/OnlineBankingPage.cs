@@ -13,11 +13,16 @@ namespace CSharpSeleniumFramework.Pages
 
         // Selectors
         private By _h1Header = By.TagName("h1");
+        private By _payBillsLink = By.Id("pay_bills_link");
 
         // Constructor
-        public OnlineBankingPage(IWebDriver driver) : base(driver){}
+        public OnlineBankingPage(IWebDriver driver) : base(driver) { }
 
         // Methods
+        public void ClickPayBillsLink()
+        {
+            ClickElement(_payBillsLink);
+        }
         public void CheckOnlineBankingPageHeader()
         {
             string h1Header = _driver.FindElement(_h1Header).Text;
