@@ -22,27 +22,22 @@ jobs:
         with:
           dotnet-version: '8.0.406'
 
-      - name: Install Allure CLI
-        run: |
-          sudo apt update
-          sudo apt install -y allure
-
       - name: Restore Dependencies
         run: dotnet restore
 
       - name: Build the Project
         run: dotnet build --no-restore
 
-      - name: Run Selenium Tests with Allure Logger
+      - name: Create a test directory
         run: |
-          mkdir -p allure-results  # Ensure allure-results directory exists
-          dotnet test --logger "allure;allure-results=allure-results" --results-directory TestResults
+          mkdir -p test-artifacts
+          echo "Test artifact" > test-artifacts/test.txt  # Create a dummy file to test upload
 
-      - name: List Allure Results Directory
-        run: ls -R allure-results  # Debugging: check if allure-results folder is generated
+      - name: List Test Directory
+        run: ls -R test-artifacts  # Check if the file exists
 
-      - name: Upload Allure Results as Artifact
+      - name: Upload Test Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: allure-results
-          path: allure-results  # Path to the allure-results folder
+          name: test-artifacts
+          path: test-artifacts  # Upload the dummy test artifact directory
