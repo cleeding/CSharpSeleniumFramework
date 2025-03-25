@@ -10,23 +10,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  upload_artifact:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Create a test directory
+      - name: Create Test Artifact
         run: |
-          mkdir -p test-artifacts
-          echo "Test artifact" > test-artifacts/test.txt  # Create a dummy file to test upload
+          mkdir -p my-artifacts
+          echo "This is a test artifact" > my-artifacts/test.txt
 
-      - name: List Test Directory
-        run: ls -R test-artifacts  # Check if the file exists
-
-      - name: Upload Test Artifact (v2)
-        uses: actions/upload-artifact@v2  # Upload the dummy test artifact directory
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: test-artifacts
-          path: test-artifacts
+          name: my-artifacts
+          path: my-artifacts
