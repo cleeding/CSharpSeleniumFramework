@@ -17,6 +17,7 @@ namespace CSharpSeleniumFramework.Tests
         protected OnlineBankingPage _onlineBankingPage;
         protected TransferFundsPage _transferFundsPage;
         protected AccountActivityPage _accountActivityPage;
+        protected PayBillsPage _payBillsPage;
 
         [SetUp]
         public virtual void Setup()
@@ -28,6 +29,7 @@ namespace CSharpSeleniumFramework.Tests
             _onlineBankingPage = new OnlineBankingPage(_driver);
             _transferFundsPage = new TransferFundsPage(_driver);
             _accountActivityPage = new AccountActivityPage(_driver);
+            _payBillsPage = new PayBillsPage(_driver);
             _driver.Manage().Window.Maximize();
 
             //Visit the application
