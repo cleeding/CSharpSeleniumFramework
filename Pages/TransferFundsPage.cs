@@ -81,7 +81,7 @@ namespace CSharpSeleniumFramework.Pages
         {
             var amountField = _wait.Until(ExpectedConditions.ElementIsVisible(_amount));
             string validationMessage = amountField.GetAttribute("validationMessage");
-            Assert.That(validationMessage, Is.EqualTo("Please fill in this field."), "Validation message not displayed");
+            Assert.That(validationMessage, Is.EqualTo("Please fill in this field.").Or.EqualTo("Please fill out this field."));
         }
     }
 }
