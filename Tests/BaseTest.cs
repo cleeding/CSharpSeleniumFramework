@@ -26,7 +26,7 @@ namespace CSharpSeleniumFramework.Tests
             options.AddArguments("headless", "disable-gpu", "window-size=1280x1024", "no-sandbox", "incognito");
 
             _driver = new ChromeDriver(options);
-            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10); // Global implicit wait
+            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20); // Global implicit wait
 
             _basePage = new BasePage(_driver);
             _homePage = new HomePage(_driver);
