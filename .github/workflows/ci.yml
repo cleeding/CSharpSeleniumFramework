@@ -17,17 +17,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.406'
-
-      - name: Restore Dependencies
-        run: dotnet restore
-
-      - name: Build the Project
-        run: dotnet build --no-restore
-
       - name: Create a test directory
         run: |
           mkdir -p test-artifacts
@@ -37,7 +26,7 @@ jobs:
         run: ls -R test-artifacts  # Check if the file exists
 
       - name: Upload Test Artifact (v2)
-        uses: actions/upload-artifact@v2  # Changed to v2 for compatibility
+        uses: actions/upload-artifact@v2  # Upload the dummy test artifact directory
         with:
           name: test-artifacts
-          path: test-artifacts  # Upload the dummy test artifact directory
+          path: test-artifacts
