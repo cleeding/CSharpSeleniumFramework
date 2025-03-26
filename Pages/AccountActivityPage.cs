@@ -24,6 +24,8 @@ namespace CSharpSeleniumFramework.Pages
         private By _withdrawalColumn = By.CssSelector("#filtered_transactions_for_account table tr:nth-child(1) td:nth-child(4)");
         private By _h2Header = By.ClassName("board-header");
 
+        private By _accountSummaryLink = By.Id("account_summary_tab");
+
         // Constructor
         public AccountActivityPage(IWebDriver driver) : base(driver) { }
 
@@ -38,7 +40,8 @@ namespace CSharpSeleniumFramework.Pages
             ClickElement(_findButton);
         }
 
-        public void CheckTabPanelHeaderIsDisplayed(){
+        public void CheckTabPanelHeaderIsDisplayed()
+        {
             var element = _driver.FindElement(_h2Header).Displayed;
             Assert.That(element, Is.True);
         }
@@ -71,6 +74,10 @@ namespace CSharpSeleniumFramework.Pages
             SendText(_fromAmountField, true, fromAmount);
             SendText(_toAmountField, true, toAmount);
             SendText(_typeField, false, type);
+        }
+        public void ClickAccountSummaryLink()
+        {
+            ClickElement(_accountSummaryLink);
         }
     }
 }

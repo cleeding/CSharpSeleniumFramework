@@ -5,6 +5,7 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
 namespace CSharpSeleniumFramework.Pages
+
 {
     public class OnlineBankingPage : BasePage
     {
@@ -14,6 +15,7 @@ namespace CSharpSeleniumFramework.Pages
         // Selectors
         private By _h1Header = By.TagName("h1");
         private By _payBillsLink = By.Id("pay_bills_link");
+        private By _accountSummaryLink = By.Id("account_summary_link");
 
         // Constructor
         public OnlineBankingPage(IWebDriver driver) : base(driver) { }
@@ -23,6 +25,11 @@ namespace CSharpSeleniumFramework.Pages
         {
             ClickElement(_payBillsLink);
         }
+        public void ClickAccountSummaryLink()
+        {
+            ClickElement(_accountSummaryLink);
+        }
+
         public void CheckOnlineBankingPageHeader()
         {
             string h1Header = _driver.FindElement(_h1Header).Text;

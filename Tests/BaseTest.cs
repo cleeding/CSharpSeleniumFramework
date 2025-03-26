@@ -18,6 +18,7 @@ namespace CSharpSeleniumFramework.Tests
         protected TransferFundsPage _transferFundsPage;
         protected AccountActivityPage _accountActivityPage;
         protected PayBillsPage _payBillsPage;
+        protected AccountSummaryPage _accountSummaryPage;
 
         [SetUp]
         public virtual void Setup()
@@ -36,7 +37,7 @@ namespace CSharpSeleniumFramework.Tests
             );
 
             _driver = new ChromeDriver(options);
-            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20); // Global implicit wait
+            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10); // Global implicit wait
 
             _basePage = new BasePage(_driver);
             _homePage = new HomePage(_driver);
@@ -45,6 +46,7 @@ namespace CSharpSeleniumFramework.Tests
             _transferFundsPage = new TransferFundsPage(_driver);
             _accountActivityPage = new AccountActivityPage(_driver);
             _payBillsPage = new PayBillsPage(_driver);
+            _accountSummaryPage = new AccountSummaryPage(_driver);
             _driver.Manage().Window.Maximize();
 
             //Visit the application
