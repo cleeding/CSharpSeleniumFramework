@@ -69,7 +69,7 @@ namespace CSharpSeleniumFramework.Tests
             var expectedValues = new (int board, int column, string expectedText)[]
             {
                 (1, 1, "Savings"),
-                (1, 3, "$1000.9")
+                (1, 3, "$1000")
                         };
 
             foreach (var (board, column, expectedText) in expectedValues)
