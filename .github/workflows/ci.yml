@@ -3,15 +3,15 @@ name: Run Selenium Tests
 on:
   push:
     branches:
-      - master  # Triggers on push to master
+      - master
   pull_request:
     branches:
-      - master  # Triggers on pull request targeting master
-  workflow_dispatch:  # Allows manual trigger from GitHub UI
+      - master
+  workflow_dispatch:
 
 jobs:
   test:
-    runs-on: ubuntu-latest  # Change to windows-latest if needed
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
@@ -20,7 +20,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.406'  # Use the correct .NET version for your project
+          dotnet-version: '8.0.406'
 
       - name: Restore Dependencies
         run: dotnet restore
@@ -30,19 +30,14 @@ jobs:
 
       - name: Run Selenium Tests
         run: |
-          mkdir -p TestResults  # Ensure the directory exists
+          mkdir -p TestResults
           dotnet test --logger "trx;LogFileName=test-results.trx" --results-directory TestResults
 
       - name: List Test Results Directory
-        run: ls -R TestResults  # List contents of TestResults directory for debugging
+        run: ls -R TestResults
 
-      - name: Create a Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
+      - name: Upload Test Results as Artifact
+        uses: actions/upload-artifact@v3
         with:
-          files: TestResults/*  # Path to your test result files (could be modified if needed)
-
-      - name: Upload Test Results as Release Asset
-        uses: softprops/action-gh-release@v1
-        with:
-          files: TestResults/*
+          name: test-results
+          path: TestResults/test-results.trx
