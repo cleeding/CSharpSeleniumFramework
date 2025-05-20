@@ -1,7 +1,7 @@
 
 # Lightweight C# Selenium & NUnit Framework 
 
-This framework leverages C#, Selenium, NUnit, POM, Allure reporting, and automatic screenshot capture for efficient and comprehensive testing.
+This framework leverages C#, Selenium, NUnit, POM, Allure Report, and automatic screenshot capture for efficient and comprehensive testing.
 
 ## Prerequisites
 
@@ -35,7 +35,7 @@ You can run the tests with the following command:
 
 4. Generating Allure Report
 
-To generate an Allure report, run the following steps:
+To generate an Allure Report, run the following steps:
 
 Run the tests with the following command to specify the logger for Allure:
 ```bash
@@ -49,21 +49,6 @@ To serve the report locally:
 ```bash
   allure serve allure-results
 ```
-This will start a local server and open the Allure report in your browser.
+This will start a local server and open the Allure Report in your browser.
 
 5. Screenshots for failing tests will be saved in a 'screenshots' folder at the project root directory
-
-## Roadmap
-
-- Increase POM coverage
-
-- Improved Folder Structure
-
-- Increase Modular Setup (reduce duplciated code)
-
-- Logging
-
-- Test Data Management
-
-- Cross Browser Support
-
