@@ -23,22 +23,13 @@ namespace CSharpSeleniumFramework.Tests
         [SetUp]
         public virtual void Setup()
         {
-            var options = new ChromeOptions();
-            options.AddArguments(
-                "--headless=new",  // Use new headless mode (Chrome 109+)
-                "--disable-gpu",   // Disable GPU (helps in headless mode)
-                "--window-size=1280x1024", // Ensure proper viewport size
-                "--no-sandbox",    // Bypass OS security restrictions (needed in CI/CD)
-                "--disable-dev-shm-usage", // Prevents crashes in Docker/Linux environments
-                "--disable-blink-features=AutomationControlled", // Reduces bot detection
-                "--disable-extensions", // Ensures no unwanted browser extensions
-                "--disable-popup-blocking", // Prevents unexpected popups
-                "--remote-debugging-port=9222" // Useful for debugging headless runs
-            );
+            _driver = WebDriverFactory.CreateDriver(browser: "firefox", headless: true);
+            InitPages();
+            _basePage.VisitSite();
+        }
 
-            _driver = new ChromeDriver(options);
-            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10); // Global implicit wait
-
+        private void InitPages()
+        {
             _basePage = new BasePage(_driver);
             _homePage = new HomePage(_driver);
             _loginPage = new LoginPage(_driver);
@@ -47,10 +38,6 @@ namespace CSharpSeleniumFramework.Tests
             _accountActivityPage = new AccountActivityPage(_driver);
             _payBillsPage = new PayBillsPage(_driver);
             _accountSummaryPage = new AccountSummaryPage(_driver);
-            _driver.Manage().Window.Maximize();
-
-            //Visit the application
-            _basePage.VisitSite();
         }
 
         [TearDown]
