@@ -31,6 +31,8 @@ namespace CSharpSeleniumFramework.Utils
                         );
                     }
 
+                    chromeOptions.AddUserProfilePreference("profile.password_manager_leak_detection", false);
+
                     driver = new ChromeDriver(chromeOptions);
                     break;
 

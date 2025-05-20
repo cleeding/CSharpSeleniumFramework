@@ -23,7 +23,7 @@ namespace CSharpSeleniumFramework.Tests
         [SetUp]
         public virtual void Setup()
         {
-            _driver = WebDriverFactory.CreateDriver(browser: "chrome", headless: true);
+            _driver = WebDriverFactory.CreateDriver(browser: "chrome", headless: false);
             InitPages();
             _basePage.VisitSite();
         }
